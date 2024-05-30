@@ -26,11 +26,17 @@ jobs:
     if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - uses: actions/checkout@v3
+      - name: Checkout docs repo
+        uses: actions/checkout@v3
+        with:
+          repository: nvimdev/nvimdev.github.io
+          path: docs-repo
       - name: panvimdoc
         uses: kdheepak/panvimdoc@main
         with:
           vimdoc: lspsaga.nvim
           version: Nvim 0.8.0
+          pandoc: "docs-repo/content/lspsaga/codeaction.md"
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'chore(doc): auto generate docs'
